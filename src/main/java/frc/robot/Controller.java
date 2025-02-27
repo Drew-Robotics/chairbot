@@ -7,11 +7,11 @@ public class Controller extends CommandXboxController {
         super(port);
     }
 
-    public double getLeftSpeed() {
-        return getLeftTriggerAxis() * (leftBumper().getAsBoolean() ? -1 : 1);
+    public double getSpeed() {
+        return getRightTriggerAxis() - getLeftTriggerAxis();
     }
 
-    public double getRightSpeed() {
-        return getRightTriggerAxis() * (rightBumper().getAsBoolean() ? -1 : 1);
+    public double getRotation() {
+        return getLeftX();
     }
 }

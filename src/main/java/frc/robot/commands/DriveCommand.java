@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer.subsystems;
 
 public class DriveCommand extends Command {
-    private DoubleSupplier m_leftSpeed;
-    private DoubleSupplier m_rightSpeed;
+    private DoubleSupplier m_speed;
+    private DoubleSupplier m_rotation;
 
-    public DriveCommand(DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
-        m_leftSpeed = leftSpeed;
-        m_rightSpeed = rightSpeed;
+    public DriveCommand(DoubleSupplier speed, DoubleSupplier rotation) {
+        m_speed = speed;
+        m_rotation = rotation;
 
         addRequirements(subsystems.drive);
     }
@@ -21,15 +21,15 @@ public class DriveCommand extends Command {
 
     @Override
     public void execute() {
-        subsystems.drive.drive(
-            m_leftSpeed.getAsDouble(), 
-            m_rightSpeed.getAsDouble()
+        subsystems.drive.gtaDrive(
+            m_speed.getAsDouble(), 
+            m_rotation.getAsDouble()
         );
     }
 
     @Override
     public void end(boolean interrupted) {
-        subsystems.drive.drive(0,0);
+        subsystems.drive.gtaDrive(0,0);
     }
 
     @Override

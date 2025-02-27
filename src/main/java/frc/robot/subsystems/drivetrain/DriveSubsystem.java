@@ -4,12 +4,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.SubsystemAbstract;
 
 public class DriveSubsystem extends SubsystemAbstract {
     private final List<Motor> m_leftMotors;
     private final List<Motor> m_rightMotors;
+
+    private double m_currentRotation;
 
     private static DriveSubsystem m_instance;
     public static DriveSubsystem getInstance() {
@@ -32,13 +35,20 @@ public class DriveSubsystem extends SubsystemAbstract {
         );
     }
 
-    public void drive(double leftSpeed, double rightSpeed) {
+    public void tankDrive(double leftSpeed, double rightSpeed) {
         setLeft(leftSpeed);
         setRight(rightSpeed);
     }
 
+    public void gtaDrive(double speed, double rotation) {
+        m_currentRotation = (rotation * Constants.kRotationScalar);
+
+        setLeft(speed + rotation);
+        setRight(speed - rotation);
+    }
+
     private void setLeft(double speed) {
-        m_leftMotors.forEach(motor -> motor.set(speed));
+        m_leftMotors.forEach(motor -> motor.set(-speed + Constants.kLeftOffset));
     }
 
     private void setRight(double speed) {
@@ -50,6 +60,8 @@ public class DriveSubsystem extends SubsystemAbstract {
 
     protected void dashboardPeriodic() {
         Stream.of(m_leftMotors, m_rightMotors).flatMap(Collection::stream).forEach(motor -> motor.log());
+
+        SmartDashboard.putNumber("Rotation", m_currentRotation);
     }
 
     protected void publishInit() {}

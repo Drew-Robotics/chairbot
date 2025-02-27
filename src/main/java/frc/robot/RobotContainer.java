@@ -23,8 +23,8 @@ public class RobotContainer {
   private void configureBindings() {
     subsystems.drive.setDefaultCommand(
       new DriveCommand(
-        m_controller::getLeftSpeed, 
-        m_controller::getRightSpeed
+        m_controller::getSpeed, 
+        m_controller::getRotation
       )
     );
   }

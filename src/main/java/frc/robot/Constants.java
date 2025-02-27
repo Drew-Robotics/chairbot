@@ -10,9 +10,13 @@ public class Constants {
 
         public static final int frontRightMotor = 4;
         public static final int backRightMotor = 2;
+
+        public static final int CANdle = 0;
     }
 
     public static final double kDriveScalar = 0.8;
+    public static final double kRotationScalar = 0.8;
+    public static final double kLeftOffset = 0.1;
 
     public static final int kControllerPort = 0;    
     public static final Current kDrivingMotorCurrentLimit = Units.Amps.of(40);
